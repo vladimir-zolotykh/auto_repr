@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 # PYTHON_ARGCOMPLETE_OK
 import inspect
+import logging
+
+logging.basicConfig(level=logging.WARNING)
 
 
 class ReprMeta(type):
@@ -18,8 +21,11 @@ class ReprMeta(type):
         def __repr__(self):
             if "__init__" in attrs:
                 sig = inspect.signature(attrs["__init__"])
+                logging.info("sig = %s" % sig)
                 key_val_pairs = ", ".join(
-                    f"{key}={getattr(self, key)!r}" for key in sig.parameters
+                    f"{key}={getattr(self, key)!r}"
+                    for key in sig.parameters
+                    if key != "self"
                 )
                 return f"{self.__class__.__name__}({key_val_pairs})"
             else:
