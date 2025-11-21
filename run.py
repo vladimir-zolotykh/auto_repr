@@ -24,15 +24,15 @@ class ReprMeta(type):
                 logging.info("sig = %s" % sig)
                 key_val_pairs = ", ".join(
                     f"{key}={getattr(self, key)!r}"
-                    for key in sig.parameters
+                    for key in sig.parameters.keys()
                     if key != "self"
                 )
-                return f"{self.__class__.__name__}({key_val_pairs})"
+                return f"{name}({key_val_pairs})"
             else:
                 key_val_pairs = ", ".join(
                     f"{key}={value!r}" for key, value in self.__dict__.items()
                 )
-                return f"{self.__class__.__name__}(key_val_pairs)"
+                return f"{name}(key_val_pairs)"
 
         attrs["__repr__"] = __repr__
         return super().__new__(mcs, name, bases, attrs)
