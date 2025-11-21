@@ -45,6 +45,22 @@ class Vehicle(metaclass=ReprMeta):
         self.speed = speed
 
 
+def run_test():
+    """
+
+    >>> car = Vehicle("red", 4, 150)
+    >>> car
+    Vehicle(color='red', wheels=4, speed=150)
+    >>> circle = Circle(5)
+    >>> circle
+    Circle(radius=5)
+
+    """
+    import doctest
+
+    doctest.testmod()
+
+
 class Circle(metaclass=ReprMeta):
     def __init__(self, radius):
         self.radius = radius
@@ -52,10 +68,4 @@ class Circle(metaclass=ReprMeta):
 
 
 if __name__ == "__main__":
-    car = Vehicle("red", 4, 150)
-    print(f"Vehicle repr: {repr(car)}")
-
-    circle = Circle(5)
-    print(f"Circle repr: {repr(circle)}")
-    # Vehicle repr: Vehicle(color='red', wheels=4, speed=150)
-    # Circle repr: Circle(radius=5)
+    run_test()
