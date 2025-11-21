@@ -12,14 +12,14 @@ class ReprMeta(type):
 
     def __new__(mcs, name, bases, attrs):
         new_cls = super().__new__(mcs, name, bases, attrs)
-        if "__repr__" not in attrs:
+        if "__repr__" in attrs:
             return new_cls
 
         def __repr__(self):
             if "__init__" in attrs:
-                sig = inspect.Signature.get(attrs, "__init__")
+                sig = inspect.signature(attrs["__init__"])
                 key_val_pairs = ", ".join(
-                    f"{key}={getattr(self, key)!r}" for key in sig.parameter.keys()
+                    f"{key}={getattr(self, key)!r}" for key in sig.parameters
                 )
                 return f"{self.__class__.__name__}({key_val_pairs})"
             else:
